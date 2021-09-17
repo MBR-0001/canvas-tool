@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div>
+    <div style="margin-bottom: 5px;">
       <div>
         Background: <input placeholder="Select background" type="file" @change="updateBackground" accept="image/png, image/jpeg">
       </div>
@@ -24,7 +24,7 @@
       <ul
         style="margin: 0; list-style-type: none; padding: 0;"
       >
-        <li v-for="(item, i) of dots" v-bind:key="i">
+        <li v-for="(item, i) of dots" v-bind:key="i" @click="deleteDot(i)">
           <span :style="'color: ' + (item.color || 'red') + ';'">• </span>
           <span>X: {{item.x}} ({{item.x / width}}) Y: {{item.y}} ({{item.y / height}})</span>
         </li>
@@ -77,15 +77,22 @@ export default {
     }
   },
   methods: {
+    deleteDot(index) {
+      this.dots.splice(index, 1);
+    },
     clearButton() {
       this.dots = [];
     },
     updateBackground(event) {
+      if (!event.target.files?.[0]) return;
+
       const img = new Image();
+
       img.onload = () => {
         this.background = img;
         this.refreshCanvas();
       };
+
       img.src = URL.createObjectURL(event.target.files[0]);
     },
     scroll() {
@@ -100,7 +107,7 @@ export default {
       ctx.clearRect(0, 0, c.width, c.height);
 
       if (this.background) {
-        ctx.drawImage(this.background, 0, 0, c.height, c.width);
+        ctx.drawImage(this.background, 0, 0, c.width, c.height);
       }
 
       ctx.beginPath();
