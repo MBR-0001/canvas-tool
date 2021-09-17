@@ -1,4 +1,4 @@
-# canvas-helper
+# canvas-tool
 
 ## Project setup
 ```
