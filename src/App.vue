@@ -21,11 +21,9 @@
       <div style="width: 100%; text-align: center;">
         <span>Points:</span> <button @click="clearButton">Clear</button>
       </div>
-      <ul
-        style="margin: 0; list-style-type: none; padding: 0;"
-      >
-        <li v-for="(item, i) of dots" v-bind:key="i" @click="deleteDot(i)">
-          <span :style="'color: ' + (item.color || 'red') + ';'">• </span>
+      <ul style="margin: 0; list-style-type: none; padding: 0;">
+        <li v-for="(item, i) of dots" v-bind:key="i" @click.ctrl="deleteDot(i)">
+          <span :style="`color: ${item.color || 'red'};`">• </span>
           <span>X: {{item.x}} ({{item.x / width}}) Y: {{item.y}} ({{item.y / height}})</span>
         </li>
       </ul>
@@ -145,7 +143,7 @@ export default {
     },
     hover(event) {
       event.preventDefault();
-      const c = this.$refs.canvas;
+      const c = this.canvas;
       if (!c) return;
 
       this.cX = event.clientX - c.offsetLeft + window.scrollX;
