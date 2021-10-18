@@ -67,6 +67,16 @@ export default {
     cY() {
       this.refreshCanvas();
     },
+    aspectX() {
+      setTimeout(() => {
+        this.refreshCanvas();
+      }, 0);
+    },
+    aspectY() {
+      setTimeout(() => {
+        this.refreshCanvas();
+      }, 0);
+    },
     mouseDown() {
       this.refreshCanvas();
     },
@@ -108,15 +118,17 @@ export default {
         ctx.drawImage(this.background, 0, 0, c.width, c.height);
       }
 
-      ctx.beginPath();
-      ctx.moveTo(this.cX, 0);
-      ctx.lineTo(this.cX, c.width);
-      ctx.stroke();
+      if (this.cX || this.cY) {
+        ctx.beginPath();
+        ctx.moveTo(this.cX, 0);
+        ctx.lineTo(this.cX, c.width);
+        ctx.stroke();
 
-      ctx.beginPath();
-      ctx.moveTo(0, this.cY);
-      ctx.lineTo(c.width, this.cY);
-      ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, this.cY);
+        ctx.lineTo(c.width, this.cY);
+        ctx.stroke();
+      }
 
       const prev = ctx.fillStyle;
 
